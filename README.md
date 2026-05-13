@@ -98,3 +98,5 @@ The application uses SQLite for data persistence. The database is automatically 
 - Shopping cart is stored in browser's localStorage
 - Orders are persisted in the SQLite database
 - Stock is automatically decremented when orders are placed
+
+
