@@ -1,0 +1,64 @@
+{% extends "base.html" %}
+
+{% block title %}Order Confirmation - RetailHub{% endblock %}
+
+{% block content %}
+<div class="confirmation-container">
+    <div class="success-message">
+        <h1>Order Confirmed!</h1>
+        <p>Thank you for your purchase</p>
+    </div>
+
+    <div class="order-details" id="order-details">
+        <div class="loading">Loading order details...</div>
+    </div>
+
+    <div class="confirmation-actions">
+        <a href="/products" class="btn btn-primary">Continue Shopping</a>
+        <a href="/" class="btn btn-secondary">Back to Home</a>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const orderId = {{ order_id }};
+        fetch(`/api/orders/${orderId}`)
+            .then(response => response.json())
+            .then(order => {
+                const html = `
+                    <div class="detail-section">
+                        <h3>Order #${order.id}</h3>
+                        <p><strong>Name:</strong> ${order.customer_name}</p>
+                        <p><strong>Email:</strong> ${order.customer_email}</p>
+                        <p><strong>Status:</strong> <span class="status">${order.status}</span></p>
+                    </div>
+                    <div class="detail-section">
+                        <h3>Items</h3>
+                        <table>
+                            <tr>
+                                <th>Product</th>
+                                <th>Quantity</th>
+                                <th>Price</th>
+                                <th>Subtotal</th>
+                            </tr>
+                            ${order.items.map(item => `
+                                <tr>
+                                    <td>${item.product_name}</td>
+                                    <td>${item.quantity}</td>
+                                    <td>$${item.price_at_purchase.toFixed(2)}</td>
+                                    <td>$${item.subtotal.toFixed(2)}</td>
+                                </tr>
+                            `).join('')}
+                        </table>
+                    </div>
+                    <div class="detail-section">
+                        <h3>Total: $${order.total_amount.toFixed(2)}</h3>
+                    </div>
+                `;
+                document.getElementById('order-details').innerHTML = html;
+            });
+    });
+</script>
+{% endblock %}
