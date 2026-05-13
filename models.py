@@ -70,3 +70,5 @@ class OrderItem(db.Model):
             'price_at_purchase': self.price_at_purchase,
             'subtotal': self.quantity * self.price_at_purchase
         }
+
+# edited
