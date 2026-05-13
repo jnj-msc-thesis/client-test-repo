@@ -51,3 +51,5 @@ function filterProducts(category) {
 document.addEventListener('DOMContentLoaded', () => {
     loadProducts();
 });
+
+# edited
