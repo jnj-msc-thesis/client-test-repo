@@ -57,3 +57,5 @@ function getCartTotal() {
 }
 
 document.addEventListener('DOMContentLoaded', updateCartCount);
+
+# edited
